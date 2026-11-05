@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 250 246 239; --surface: 255 255 255; --ink: 40 32 28; --muted: 112 100 90;
+  --line: 229 220 208; --kiln: 201 63 34; --kiln-ink: 255 255 255;
+  --moss: 46 122 98; --amber: 214 150 28; --danger: 180 35 35;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: 24 20 18; --surface: 38 32 29; --ink: 245 238 229; --muted: 176 164 152;
+    --line: 62 54 48; --kiln: 238 99 66; --kiln-ink: 30 16 12;
+    --moss: 88 190 156; --amber: 240 186 80; --danger: 245 120 110;
+  }
+}
+html { color-scheme: light dark; }
+body { @apply bg-bg text-ink font-sans antialiased; min-width: 320px; }
+:focus-visible { outline: 3px solid rgb(var(--amber)); outline-offset: 2px; border-radius: 6px; }
+
+.btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold transition-transform duration-150 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed select-none; min-height: 48px; }
+.btn-primary { @apply bg-kiln text-kiln-ink hover:brightness-110; }
+.btn-moss { @apply bg-moss text-kiln-ink hover:brightness-110; }
+.btn-ghost { @apply border border-line bg-surface text-ink hover:bg-line/50; }
+.btn-danger { @apply bg-danger text-kiln-ink hover:brightness-110; }
+.card { @apply rounded-2xl border border-line bg-surface shadow-sm; }
+.chip { @apply inline-flex items-center rounded-full bg-line/60 px-2.5 py-0.5 text-xs font-medium text-muted; }
+.kbd { @apply inline-block rounded border border-line bg-bg px-1.5 text-xs font-mono text-muted; }
+
+.skeleton { background: linear-gradient(90deg, rgb(var(--line) / .5), rgb(var(--line) / .9), rgb(var(--line) / .5)); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+.swipe-card { touch-action: pan-y; transition: transform .25s ease, opacity .25s ease; }
+.swipe-card.dragging { transition: none; cursor: grabbing; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}

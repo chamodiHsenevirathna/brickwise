@@ -1,0 +1,80 @@
+# --- Python / Node environments & caches
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+frontend/dist/
+*.log
+
+# --- Secrets & local config (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+secrets/
+.claude/
+
+# --- Third-party data, generated artefacts and personal data (all under data/)
+# Rebrickable CSVs, downloaded set images, SQLite DB (contains your ratings),
+# CLIP embeddings and ingest reports are NOT redistributable / are personal.
+data/*
+!data/.gitkeep
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.npy
+*.npz
+*.faiss
+*.csv
+*.csv.gz
+
+# --- Local-only copies of the original screenshots (contain third-party product photos)
+docs/assets-private/
+
+# --- AI coding assistant artefacts (sessions, memory, local settings, agent notes)
+.claude/
+.claude.json*
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+.cursor/
+.cursorrules
+.codex/
+.gemini/
+.copilot/
+.kiro/
+.agents/
+.pencil/
+.aider*
+*.jsonl
+
+# --- Build / test / tooling output
+dist/
+build/
+coverage/
+.coverage
+htmlcov/
+*.egg-info/
+.cache/
+.tmp/
+tmp/
+nohup.out
+*.swp
+*.bak
+*.orig
+
+# --- OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# --- Local-only notes
+*.local.md

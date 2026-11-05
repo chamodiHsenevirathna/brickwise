@@ -1,0 +1,11 @@
+torch
+open_clip_torch
+faiss-cpu
+scikit-learn
+numpy
+pillow
+fastapi
+uvicorn[standard]
+pydantic
+httpx
+pytest
