@@ -1,19 +1,14 @@
 # Brickwise
 
+<p align="center"><img src="assets/portfolio-cover.svg" alt="Brickwise — product discovery, learned visually" width="100%" /></p>
+
+**Most people can recognise what they like faster than they can describe it.** Brickwise explores what happens when product discovery starts with that simple observation.
+
 **Discover products that match your preferences.**
 
 Brickwise is an AI-powered visual product discovery and personalisation platform. Instead of asking people to search, filter and scroll, it learns their taste from a stream of quick Like / Pass decisions on product images, then ranks the rest of the catalogue by how well each item fits.
 
 LEGO® sets are the demonstration catalogue. The recommendation architecture does not depend on LEGO, and the same approach could be pointed at other image-rich catalogues (see [Future direction](#future-direction)).
-
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white)
-![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript&logoColor=white)
-![CLIP](https://img.shields.io/badge/CLIP-ViT--B%2F32-412991)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-LogReg-F7931E?logo=scikitlearn&logoColor=white)
-![FAISS](https://img.shields.io/badge/FAISS-similarity-0467DF)
-![SQLite](https://img.shields.io/badge/SQLite-storage-003B57?logo=sqlite&logoColor=white)
 
 ![Brickwise discovery page](docs/assets/01-discover.png)
 
