@@ -25,6 +25,10 @@ secrets/
 # CLIP embeddings and ingest reports are NOT redistributable / are personal.
 data/*
 !data/.gitkeep
+# Independent demo catalogue (fictional, original): source files are tracked,
+# but its runtime DB/embeddings/feedback are not.
+!data/demo/
+data/demo/runtime/
 *.db
 *.db-shm
 *.db-wal
@@ -35,6 +39,9 @@ data/*
 *.faiss
 *.csv
 *.csv.gz
+
+# --- Real LEGO/Rebrickable photos copied for local README experiments: redistribution rights unverified
+docs/assets/products/
 
 # --- Local-only copies of the original screenshots (contain third-party product photos)
 docs/assets-private/
@@ -78,3 +85,5 @@ nohup.out
 
 # --- Local-only notes
 *.local.md
+
+dist-demo/

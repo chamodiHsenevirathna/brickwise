@@ -1,5 +1,5 @@
 import type {
-  EvaluationReport, FeedbackCreated, FeedbackList, FeedbackUndone, Method,
+  DemoInfo, EvaluationReport, FeedbackCreated, FeedbackList, FeedbackUndone, Method,
   NextProductsResponse, PreferenceSummary, RecommendationsResponse,
 } from "./types";
 
@@ -57,5 +57,8 @@ export const api = {
   recommendations: (method: Method, k = 5) =>
     request<RecommendationsResponse>(`/api/recommendations?k=${k}&method=${method}`),
   evaluation: () => request<EvaluationReport>("/api/evaluation"),
+  demoInfo: () => request<DemoInfo>("/api/demo/info"),
+  demoSeedExample: () => request<{ profile_mode: "example"; seeded: number }>("/api/demo/example-profile", { method: "POST" }),
+  demoReset: () => request<{ profile_mode: "fresh" }>("/api/demo/reset", { method: "POST" }),
   simulate: () => request<EvaluationReport>("/api/evaluation/simulate", { method: "POST" }),
 };
