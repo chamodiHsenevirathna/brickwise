@@ -9,10 +9,16 @@ Brickwise's own source code and documentation are the only things the project's 
 |---|---|---|
 | Sets and themes CSVs | Rebrickable (https://rebrickable.com/downloads/) | Terms **not verified** by this project. Credit Rebrickable.com. Not redistributed here. |
 | Set photographs | Hosted on Rebrickable's CDN; owned by their respective rights holders | Terms **not verified**. Not redistributed. Downloaded only to the user's local `data/images/`. |
-| Set names / numbers | Rebrickable catalogue metadata | README screenshots use a synthetic demo catalogue and show none. Public display elsewhere remains an open question. |
+| Set names / numbers | Rebrickable catalogue metadata | Not shown in this repository (the README gallery uses fictional demo products). Public display elsewhere remains an open question. |
 
 Rebrickable's downloads page and terms page could not be read automatically while preparing this release
 (HTTP 403), so no claim about what they permit is made here.
+
+## Independent demo catalogue (included in this repository)
+
+`data/demo/` holds 12 fictional products, synthetic example preferences and original artwork drawn for this project
+(`backend/brickwise/data/demo_artwork.py`). It contains no Rebrickable or LEGO data or images. Its licence will be the
+project's own once one is chosen. The synthetic preferences are not collected from any person.
 
 ## Trademarks
 

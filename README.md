@@ -10,20 +10,6 @@ Brickwise is an AI-powered visual product discovery and personalisation platform
 
 LEGO® sets are the demonstration catalogue. The recommendation architecture does not depend on LEGO, and the same approach could be pointed at other image-rich catalogues (see [Future direction](#future-direction)).
 
-![Brickwise discovery page](docs/assets/01-discover.png)
-
-*The real Brickwise app, running on a small synthetic demo catalogue (original artwork, not product photos). See [About these screenshots](#about-these-screenshots).*
-
-### From first tap to personal recommendations
-
-| Step | What happens | Screenshot |
-|---|---|---|
-| 1. **Discover** | One product at a time, with Like / Pass and a progress bar | [01](docs/assets/01-discover.png) |
-| 2. **Swipe** | Drag the card, or press a key, to rate it | [02](docs/assets/02-discover-swipe.png) |
-| 3. **For you** | Top 5 unrated products, each with a match score and a reason | [03](docs/assets/03-recommendations.png) |
-| 4. **Profile** | What the model has learned, and whether it is ready | [04](docs/assets/04-profile.png) |
-| 5. **Evaluation** | Precision@5 against two baselines | [05](docs/assets/05-evaluation.png) |
-
 > Status: working local MVP. Runs entirely on your machine with free tools: no paid APIs, no accounts, no cloud. It has **not** been evaluated with real users yet; see [Evaluation](#evaluation-and-experimentation).
 
 ---
@@ -48,55 +34,87 @@ Brickwise treats discovery as a feedback loop. Showing a product and asking "yes
 
 The model is retrained from scratch on each recommendation request, so new feedback is reflected immediately.
 
-## Product experience
+## Product gallery
 
-All five screenshots are the real running app, driven with Playwright at 1440 × 1000. The profile behind them is a **scripted demo profile** that likes Vehicles and Space and passes on everything else. It is not a real person, and its numbers are not real-user results.
+The independent demo catalogue: 12 **fictional** products (`BW-001` to `BW-012`) with **original artwork** drawn for this project by `backend/brickwise/data/demo_artwork.py` (see [Independent demo](#independent-demo)). They are simple illustrations, not photographs, and are not LEGO® sets.
 
-### 1. Discover
+<table>
+  <tr>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-001.jpg" alt="Ridgeback Rally Car, product BW-001" width="220"><br>
+      <b>Ridgeback Rally Car</b><br>
+      BW-001 · Vehicles
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-002.jpg" alt="Titan Track Excavator, product BW-002" width="220"><br>
+      <b>Titan Track Excavator</b><br>
+      BW-002 · Construction
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-003.jpg" alt="Skyline Commuter Jet, product BW-003" width="220"><br>
+      <b>Skyline Commuter Jet</b><br>
+      BW-003 · Transport
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-004.jpg" alt="Glasshouse Garden, product BW-004" width="220"><br>
+      <b>Glasshouse Garden</b><br>
+      BW-004 · Nature
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-005.jpg" alt="Rescue Rotorcraft, product BW-005" width="220"><br>
+      <b>Rescue Rotorcraft</b><br>
+      BW-005 · Rescue
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-006.jpg" alt="Lunar Survey Rover, product BW-006" width="220"><br>
+      <b>Lunar Survey Rover</b><br>
+      BW-006 · Space
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-007.jpg" alt="Moonstone Keep, product BW-007" width="220"><br>
+      <b>Moonstone Keep</b><br>
+      BW-007 · Fantasy
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-008.jpg" alt="Deepwater Explorer, product BW-008" width="220"><br>
+      <b>Deepwater Explorer</b><br>
+      BW-008 · Ocean
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-009.jpg" alt="MetroLink Tram, product BW-009" width="220"><br>
+      <b>MetroLink Tram</b><br>
+      BW-009 · Transport
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-010.jpg" alt="Redline Street Bike, product BW-010" width="220"><br>
+      <b>Redline Street Bike</b><br>
+      BW-010 · Vehicles
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-011.jpg" alt="Coastal Research Vessel, product BW-011" width="220"><br>
+      <b>Coastal Research Vessel</b><br>
+      BW-011 · Ocean
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="data/demo/images/bw-012.jpg" alt="Jungle Stalker, product BW-012" width="220"><br>
+      <b>Jungle Stalker</b><br>
+      BW-012 · Creatures
+    </td>
+  </tr>
+</table>
 
-One large card per product, with the name, set number, theme, piece count and year. Like and Pass buttons, Undo, keyboard shortcuts (`→`/`L` like, `←`/`P` pass, `Z` undo), and a progress bar. Ratings are saved instantly and survive restarts.
+*All names, product IDs and images above are fictional or original and contain no Rebrickable or LEGO data. Brickwise is not affiliated with or endorsed by the LEGO Group or Rebrickable. The main app is built for real LEGO® set data from Rebrickable, which you download yourself (see [Data, licensing and attribution](#data-licensing-and-attribution)); no set photographs are included in this repository.*
 
-![Discover page: product image, details, Pass / Undo / Like and progress](docs/assets/01-discover.png)
+### How the app works
 
-*A product card with its details, the Like / Pass controls and a progress bar (30 of 120 rated).*
-
-### 2. Swipe to rate
-
-![Mid-swipe: the card is tilted with a LIKE stamp](docs/assets/02-discover-swipe.png)
-
-*A real drag in progress: the card tilts and a LIKE stamp appears (dragging left shows PASS). Releasing past the threshold saves the rating.*
-
-### 3. Personalised recommendations
-
-The top five unrated products, ranked by predicted match. Each card explains itself using the liked products it most resembles, and a toggle switches between the learned taste model and the plain similarity baseline.
-
-![Recommendations page: ranked products with match percentages and explanations](docs/assets/03-recommendations.png)
-
-*After 45 scripted ratings. The percentage is the classifier's predicted like-probability, and "Similar to your liked" lists real nearest-neighbour lookups on CLIP embeddings. The page continues below with ranks 4 and 5. Results are visually similar because the demo taste is narrow (see Future direction).*
-
-### 4. Preference profile
-
-A readable summary of what the system has learned: counts, average piece count of liked versus passed products, per-theme like rates and the model's status.
-
-![Profile page: rating counts, theme like rates and model status](docs/assets/04-profile.png)
-
-*The same scripted profile: 17 likes, 28 passes, theme like rates and "Ready" model status. The app also shows when it is not ready (fewer than 3 likes or 3 passes).*
-
-### 5. Evaluation dashboard
-
-Precision@5 for the taste model, the similarity baseline and a random baseline. Results from the rated profile and results from synthetic users are shown in separate panels.
-
-![Evaluation page: Precision@5 for taste model, similarity and random baselines](docs/assets/05-evaluation.png)
-
-*Top panel: held-out evaluation of the scripted profile's 45 ratings. The app badges it "Real ratings" because it cannot tell a script from a person; here it is **not** a real user. Bottom panel: a simulated-user run, badged "Simulated, not your data". On this tiny scripted run the similarity baseline scores slightly higher than the taste model in the top panel and lower in the bottom one, so the screenshot shows the dashboard working, not one method winning.*
-
-### About these screenshots
-
-- **Real app, synthetic data.** They come from the unmodified application running against a scratch data directory (the demo database is not part of the repository). The 120 products, their names ("Demo Rally Buggy 1" and so on) and their images are an original synthetic demo catalogue made for this purpose: simple brick-style illustrations drawn for this project, each carrying a "SYNTHETIC DEMO ARTWORK" strip. They are **not** LEGO® sets, Rebrickable data or photographs.
-- **Real pipeline.** Embeddings were computed by the actual CLIP model on those illustrations, and the rankings, scores and evaluation numbers are the app's real output for them.
-- **Scripted ratings.** A script rated 44 products by a stated taste (Vehicles and Space liked, with three deliberately flipped ratings); one more rating was made by dragging the card in the browser. Nothing here describes how well Brickwise suits real people.
-- **Footer text.** The app footer mentions Rebrickable because the app is built for that dataset; it does not apply to the synthetic demo catalogue shown here.
-- Run the app locally with the ingested dataset and you will see real set photos.
+- **Discover.** One large card per product with its name, set number, theme, piece count and year. Like and Pass buttons, Undo, keyboard shortcuts (`→`/`L` like, `←`/`P` pass, `Z` undo), drag-to-swipe, and a progress bar. Ratings are saved instantly and survive restarts.
+- **For you.** The top five unrated products, ranked by predicted match. Each card explains itself using the liked products it most resembles, and a toggle switches between the learned taste model and the plain similarity baseline.
+- **Profile.** A readable summary of what the system has learned: counts, average piece count of liked versus passed products, per-theme like rates and the model's status.
+- **Evaluation.** Precision@5 for the taste model, the similarity baseline and a random baseline. Results from your own ratings and results from simulated users are shown in separate panels.
 
 ## How it works
 
@@ -278,9 +296,32 @@ Optional: set `BRICKWISE_DATA_DIR` to keep the generated data (database, images,
 **4. Test**
 
 ```bash
-cd backend && ../.venv/bin/python -m pytest tests          # 64 tests: data, ML, API (no network or CLIP needed)
+cd backend && ../.venv/bin/python -m pytest tests          # 80 tests: data, ML, API, demo (no network or CLIP needed)
 cd frontend && npm run typecheck && npm test && npm run build
 ```
+
+## Independent demo
+
+Brickwise includes a self-contained demo that needs **no Rebrickable download and no personal data**. It is a separate catalogue of 12 **fictional** products (`BW-001` to `BW-012`, in `data/demo/products.csv`) with **original artwork**: simple brick-style illustrations drawn with Pillow by `backend/brickwise/data/demo_artwork.py` (deterministic, no photographs, no LEGO or Rebrickable images). The demo is labelled in the UI: *Independent demo catalogue · Fictional products · Synthetic data*.
+
+It runs the same recommender, explanations and evaluation code as the main app, as a **separate backend process with its own database, images and CLIP embeddings** in `data/demo/runtime/` (git-ignored). It never opens `data/brickwise.db`, `data/images/` or `data/embeddings.npy`, and the demo backend refuses to start on the personal data directory.
+
+```bash
+# one time: copy images + build the demo database and CLIP embeddings (12 images)
+cd backend && ../.venv/bin/python -m brickwise.data.demo_ingest
+# terminal 1: demo API on port 8001
+../.venv/bin/uvicorn brickwise.api.demo:create_default_app --factory --port 8001
+# terminal 2: demo UI on http://localhost:5174
+cd frontend && npm run dev:demo
+```
+
+The main app (ports 8000 and 5173) is unaffected and can run at the same time.
+
+- **Fresh demo.** Starts with no ratings. Like, Pass and Undo, then get recommendations once you have at least 3 likes and 3 passes (the normal minimums; they are not lowered for the demo).
+- **Example profile.** "Load example profile (synthetic)" fills the demo with illustrative preferences from `data/demo/synthetic_preferences.csv` (a made-up fan of vehicles and exploration builds). It is **not collected from any person** and says so wherever it is active. One like (`BW-009`) and one pass (`BW-011`) are held out so there are still products to recommend and the evaluation minimums (10 ratings, 4 of each kind) are met. "Reset demo" clears only the demo database.
+- **Small-data caveat.** With 12 products, recommendation scores and the held-out evaluation are illustrative only. They show the pipeline working and are not evidence of recommendation quality. The simulated-user evaluation is not available in the demo because it needs far more products.
+
+The original Rebrickable-backed workflow in [Getting started](#getting-started) remains a separate local workflow; the demo does not replace it.
 
 ## Project structure
 
@@ -300,7 +341,7 @@ brickwise/
 │   └── src/{api,components,hooks,pages,test}/          Discover, Recommendations, Profile, Evaluation
 ├── docs/
 │   ├── CONTRACTS.md       API and ML contracts
-│   └── assets/            README screenshots
+│   └── assets/            README images
 └── data/                  generated, git-ignored: brickwise.db, images/, embeddings.npy
 ```
 
@@ -325,8 +366,8 @@ Possible extensions:
 **Set data and images** come from [Rebrickable](https://rebrickable.com): the public `sets` and `themes` CSV downloads, plus the set images hosted on Rebrickable's CDN. Please credit **Rebrickable.com**. This project has **not** verified Rebrickable's terms for the CSVs or for the images, and nothing here grants you any right to that data. Read Rebrickable's terms before using or sharing it.
 
 - The dataset, downloaded images, SQLite database (which holds your ratings) and CLIP embeddings are **not** part of this repository. They live in `data/`, which is git-ignored, and are created on your machine by the commands above.
-- The set photographs are owned by their respective rights holders. Attribution is not permission to redistribute them, so they are not republished here. The README screenshots use an original synthetic demo catalogue instead.
-- The README screenshots show only synthetic demo names, numbers and artwork created for this project, so they contain no Rebrickable metadata or photographs.
+- The set photographs are owned by their respective rights holders. Attribution is not permission to redistribute them, so they are not republished here. The README gallery and the [independent demo](#independent-demo) use original synthetic artwork instead.
+- The independent demo in `data/demo/` is separate: its products and artwork are fictional and original, and contain no Rebrickable or LEGO data or images.
 
 **LEGO® disclaimer.** Brickwise is an independent project. It is not affiliated with, sponsored by or endorsed by the LEGO Group. LEGO® is a trademark of the LEGO Group. The Brickwise name and logo mark are original and are not LEGO® trade dress.
 

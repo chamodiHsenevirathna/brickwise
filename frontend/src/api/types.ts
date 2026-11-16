@@ -38,3 +38,11 @@ export interface EvaluationReport {
   methods: Partial<Record<"logreg" | "similarity" | "random", MethodScore>>;
   winner: string | null; base_rate: number;
 }
+
+export interface DemoInfo {
+  demo: true;
+  banner: string;
+  profile_mode: "fresh" | "example";
+  example_profile: { profile_id: string; description: string; warning: string; n_ratings: number; held_out: string[] };
+  provenance: string;
+}

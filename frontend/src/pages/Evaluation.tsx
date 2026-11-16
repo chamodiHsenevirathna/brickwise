@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import type { EvaluationReport } from "../api/types";
 import { useAsync } from "../hooks/useAsync";
+import { isDemo } from "../demo";
 import { Bar, ErrorBox, Loading, PageTitle } from "../components/ui";
 
 const NAMES: Record<string, string> = { logreg: "Taste model (logistic regression)", similarity: "Similarity to likes", random: "Random baseline" };
@@ -60,6 +61,7 @@ export default function Evaluation() {
   const [simLoading, setSimLoading] = useState(false);
   const [simError, setSimError] = useState<string | null>(null);
 
+  const demo = isDemo();
   const runSim = async () => {
     setSimLoading(true); setSimError(null);
     try { setSim(await api.simulate()); }
@@ -70,16 +72,25 @@ export default function Evaluation() {
   return (
     <div className="space-y-6">
       <PageTitle title="How good are the recommendations?" subtitle="Honest held-out evaluation on your own ratings, compared to simple baselines." />
+      {demo && (
+        <p className="card border-amber/60 bg-amber/10 p-4 text-sm" data-testid="demo-eval-note">
+          <span className="font-semibold">Demo catalogue: 12 fictional products.</span> The evaluation needs at least 10 ratings with 4 of each kind, so it only appears once you have rated most of the catalogue (or loaded the synthetic example profile). With this little data the numbers are illustrative only and are not evidence of recommendation quality.
+        </p>
+      )}
       {real.loading ? <Loading label="Loading evaluation…" />
         : real.error ? <ErrorBox message={real.error.message} onRetry={real.reload} />
         : real.data && <ReportView report={real.data} />}
 
+      {demo ? (
+        <p className="text-sm text-muted" data-testid="demo-no-sim">The simulated-user evaluation is not available in the demo: it needs far more products than the 12 in this catalogue.</p>
+      ) : (
       <section className="card p-5" aria-labelledby="sim-h">
         <h2 id="sim-h" className="font-display text-lg font-bold">Try a simulation</h2>
         <p className="mt-1 text-sm text-muted">No ratings to spare? Run the evaluation on a synthetic user. Results are labelled SIMULATED and never mixed with your real report.</p>
         <button className="btn btn-ghost mt-3" onClick={() => void runSim()} disabled={simLoading}>{simLoading ? "Simulating…" : "Run simulated evaluation"}</button>
         {simError && <p role="alert" className="mt-2 text-sm text-danger">{simError}</p>}
       </section>
+      )}
       {sim && <ReportView report={sim} />}
     </div>
   );

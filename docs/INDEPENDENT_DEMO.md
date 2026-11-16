@@ -22,6 +22,13 @@ Use the existing CLIP embedding implementation and recommender service against t
 
 A fresh profile must start with no feedback. Resetting the demo may only clear the demo database.
 
-## Not yet complete
+## Running it
 
-This branch currently contains metadata and synthetic preference fixtures only. Image binaries, runnable demo ingestion, embedding generation, a separate API process, frontend demo routes, and automated isolation tests are not yet included. Do not treat this branch as a working demo until those pieces are implemented and verified.
+```bash
+cd backend && ../.venv/bin/python -m brickwise.data.demo_artwork   # optional: regenerate the 12 original images
+../.venv/bin/python -m brickwise.data.demo_ingest                  # demo DB + CLIP embeddings in data/demo/runtime/
+../.venv/bin/uvicorn brickwise.api.demo:create_default_app --factory --port 8001
+cd ../frontend && npm run dev:demo                                 # http://localhost:5174
+```
+
+The example profile seeds 10 of the 12 synthetic ratings (holding out `BW-009` and `BW-011`) so that recommendations have candidates and the evaluation minimums are met. Evaluation on 12 products is illustrative only. See the README for details.
