@@ -1,0 +1,21 @@
+{
+  "profile_id": "demo-vehicle-space-fan",
+  "description": "Synthetic example profile that prefers vehicles, transport and exploration builds.",
+  "likes": [
+    "BW-001",
+    "BW-002",
+    "BW-003",
+    "BW-005",
+    "BW-006",
+    "BW-009",
+    "BW-010"
+  ],
+  "passes": [
+    "BW-004",
+    "BW-007",
+    "BW-008",
+    "BW-011",
+    "BW-012"
+  ],
+  "warning": "Illustrative synthetic preferences only. Not collected from a real person and not evidence of recommendation quality."
+}
