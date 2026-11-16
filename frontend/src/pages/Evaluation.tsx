@@ -4,12 +4,13 @@ import { api } from "../api/client";
 import type { EvaluationReport } from "../api/types";
 import { useAsync } from "../hooks/useAsync";
 import { isDemo } from "../demo";
+import { useDemoInfo } from "../hooks/useDemoInfo";
 import { Bar, ErrorBox, Loading, PageTitle } from "../components/ui";
 
 const NAMES: Record<string, string> = { logreg: "Taste model (logistic regression)", similarity: "Similarity to likes", random: "Random baseline" };
 const COLORS: Record<string, string> = { logreg: "bg-kiln", similarity: "bg-moss", random: "bg-muted" };
 
-export function ReportView({ report }: { report: EvaluationReport }) {
+export function ReportView({ report, realLabel = "Real ratings" }: { report: EvaluationReport; realLabel?: string }) {
   const entries = (["logreg", "similarity", "random"] as const).filter((k) => report.methods[k]);
   return (
     <section aria-labelledby="report-h" className="card p-5" data-testid={report.simulated ? "report-simulated" : "report-real"}>
@@ -17,7 +18,7 @@ export function ReportView({ report }: { report: EvaluationReport }) {
         <h2 id="report-h" className="font-display text-xl font-bold">{report.simulated ? "Simulated user report" : "Your held-out report"}</h2>
         {report.simulated
           ? <span className="rounded-full border-2 border-amber bg-amber/20 px-3 py-0.5 text-xs font-extrabold uppercase tracking-wide text-amber" data-testid="simulated-badge">Simulated — not your data</span>
-          : <span className="rounded-full bg-moss/20 px-3 py-0.5 text-xs font-extrabold uppercase tracking-wide text-moss">Real ratings</span>}
+          : <span className="rounded-full bg-moss/20 px-3 py-0.5 text-xs font-extrabold uppercase tracking-wide text-moss" data-testid="ratings-badge">{realLabel}</span>}
       </div>
       {report.simulated && <p className="mt-2 rounded-lg bg-amber/10 p-3 text-sm">These numbers come from a synthetic user whose likes are a chosen theme. They show the pipeline works, and say nothing about how well it fits you.</p>}
 
@@ -62,6 +63,8 @@ export default function Evaluation() {
   const [simError, setSimError] = useState<string | null>(null);
 
   const demo = isDemo();
+  const demoInfo = useDemoInfo();
+  const demoSize = demoInfo ? `${demoInfo.product_count} ${demoInfo.catalogue === "real" ? "real sets" : "fictional products"}` : "a small catalogue";
   const runSim = async () => {
     setSimLoading(true); setSimError(null);
     try { setSim(await api.simulate()); }
@@ -74,15 +77,15 @@ export default function Evaluation() {
       <PageTitle title="How good are the recommendations?" subtitle="Honest held-out evaluation on your own ratings, compared to simple baselines." />
       {demo && (
         <p className="card border-amber/60 bg-amber/10 p-4 text-sm" data-testid="demo-eval-note">
-          <span className="font-semibold">Demo catalogue: 12 fictional products.</span> The evaluation needs at least 10 ratings with 4 of each kind, so it only appears once you have rated most of the catalogue (or loaded the synthetic example profile). With this little data the numbers are illustrative only and are not evidence of recommendation quality.
+          <span className="font-semibold">Demo catalogue: {demoSize}.</span> The evaluation needs at least 10 ratings with 4 of each kind, so it only appears once you have rated most of the catalogue (or loaded the simulated example profile). With this little data the numbers are illustrative only and are not evidence of recommendation quality.
         </p>
       )}
       {real.loading ? <Loading label="Loading evaluation…" />
         : real.error ? <ErrorBox message={real.error.message} onRetry={real.reload} />
-        : real.data && <ReportView report={real.data} />}
+        : real.data && <ReportView report={real.data} realLabel={demoInfo?.profile_mode === "example" ? "Includes simulated example ratings" : undefined} />}
 
       {demo ? (
-        <p className="text-sm text-muted" data-testid="demo-no-sim">The simulated-user evaluation is not available in the demo: it needs far more products than the 12 in this catalogue.</p>
+        <p className="text-sm text-muted" data-testid="demo-no-sim">The simulated-user evaluation is not available in the demo: it needs far more products than this catalogue has.</p>
       ) : (
       <section className="card p-5" aria-labelledby="sim-h">
         <h2 id="sim-h" className="font-display text-lg font-bold">Try a simulation</h2>

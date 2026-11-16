@@ -3,6 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { Logo } from "./Logo";
 import { DemoBar } from "./DemoBar";
 import { isDemo } from "../demo";
+import { useDemoInfo } from "../hooks/useDemoInfo";
 
 const links = [
   { to: "/", label: "Discover", end: true },
@@ -13,6 +14,7 @@ const links = [
 
 export function Layout() {
   const demo = isDemo();
+  const demoInfo = useDemoInfo();
   const [epoch, setEpoch] = useState(0); // bumping it remounts the page so it re-fetches after demo changes
   return (
     <div className="flex min-h-screen flex-col">
@@ -35,7 +37,7 @@ export function Layout() {
       <footer className="border-t border-line px-4 py-6 text-center text-xs text-muted">
         <p className="mx-auto max-w-2xl">
           {demo
-            ? "Brickwise independent demo: fictional products, original generated artwork and synthetic example preferences. No Rebrickable or LEGO data or images. Not affiliated with the LEGO Group or Rebrickable."
+            ? (demoInfo?.footer ?? "Brickwise demo. Not affiliated with the LEGO Group or Rebrickable.")
             : <>Brickwise is an independent project, not affiliated with the LEGO Group. LEGO® is a trademark of the LEGO Group. Set data &amp; images from Rebrickable.</>}
         </p>
       </footer>

@@ -22,13 +22,9 @@ Use the existing CLIP embedding implementation and recommender service against t
 
 A fresh profile must start with no feedback. Resetting the demo may only clear the demo database.
 
-## Running it
+## Two catalogues
 
-```bash
-cd backend && ../.venv/bin/python -m brickwise.data.demo_artwork   # optional: regenerate the 12 original images
-../.venv/bin/python -m brickwise.data.demo_ingest                  # demo DB + CLIP embeddings in data/demo/runtime/
-../.venv/bin/uvicorn brickwise.api.demo:create_default_app --factory --port 8001
-cd ../frontend && npm run dev:demo                                 # http://localhost:5174
-```
+- **Fictional (public, default without local data):** `data/demo/`, run via `brickwise.data.demo_ingest`. Fixtures also used by the tests.
+- **Real (local only):** a frozen 16-product selection from the user's own catalogue, built by `brickwise.data.demo_real` (`propose` -> human review of the contact sheet -> `freeze` -> `build`) into git-ignored `data/demo-real/`. The personal DB is opened read-only with an authorizer denying the `feedback` table; embeddings are sliced from the existing cache (no CLIP); photographs are served read-only from `data/images/` through an allow-listed route and never copied. Selection metadata and photos must never be committed.
 
-The example profile seeds 10 of the 12 synthetic ratings (holding out `BW-009` and `BW-011`) so that recommendations have candidates and the evaluation minimums are met. Evaluation on 12 products is illustrative only. See the README for details.
+See the README ("Demo mode") for commands. Example profiles are simulated or synthetic and are not evidence of recommendation quality.

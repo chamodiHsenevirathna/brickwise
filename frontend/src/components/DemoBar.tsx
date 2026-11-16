@@ -26,17 +26,17 @@ export function DemoBar({ onChanged }: { onChanged: () => void }) {
   return (
     <section aria-label="Demo controls" className="border-b border-amber/50 bg-amber/15">
       <div className="mx-auto max-w-4xl px-4 py-2 text-sm">
-        <p className="font-bold" data-testid="demo-banner">{DEMO_BANNER}</p>
+        <p className="font-bold" data-testid="demo-banner">{info?.banner ?? DEMO_BANNER}</p>
         {example && (
           <p className="mt-1" data-testid="example-label">
-            <span className="font-semibold">Example profile loaded (synthetic).</span>{" "}
+            <span className="font-semibold">Example profile loaded (simulated).</span>{" "}
             {info?.example_profile.warning} Anything you rate now is added on top.
           </p>
         )}
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <button className="btn btn-ghost !min-h-0 !px-3 !py-1.5 text-sm" disabled={busy || !info}
             onClick={() => void run(api.demoSeedExample)}>
-            {example ? "Reload example profile" : "Load example profile (synthetic)"}
+            {example ? "Reload example profile" : "Load example profile (simulated)"}
           </button>
           <button className="btn btn-ghost !min-h-0 !px-3 !py-1.5 text-sm" disabled={busy || !info}
             onClick={() => void run(api.demoReset)}>
