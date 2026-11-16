@@ -3,16 +3,16 @@
 Brickwise's own source code and documentation are the only things the project's eventual licence will cover
 (no licence has been selected yet). Everything below is owned by someone else and stays under its own terms.
 
-## Data and images (not included in this repository)
+## Data and images (a 16-photo README sample is included)
 
 | Item | Source | Status |
 |---|---|---|
 | Sets and themes CSVs | Rebrickable (https://rebrickable.com/downloads/) | Terms **not verified** by this project. Credit Rebrickable.com. Not redistributed here. |
-| Set photographs | Hosted on Rebrickable's CDN; owned by their respective rights holders | Terms **not verified**. Not redistributed. Downloaded only to the user's local `data/images/`. |
-| Set names / numbers | Rebrickable catalogue metadata | Not shown in this repository (the README gallery uses fictional demo products). Public display elsewhere remains an open question. |
+| Set photographs | Hosted on Rebrickable's CDN; owned by their respective rights holders (LEGO Group) | Terms **not verified**. 16 images are included in `docs/assets/products/`, and appear in `docs/assets/screenshots/` and `docs/assets/hero.png`, to illustrate the product. They may be removed on request. The other 784 are not redistributed and stay in the user's local `data/images/`. Attribution is not permission. |
+| Set names / numbers | Rebrickable catalogue metadata | Shown in the README (16 sets). Whether public display is permitted remains an open question. |
 
-Rebrickable's downloads page and terms page could not be read automatically while preparing this release
-(HTTP 403), so no claim about what they permit is made here.
+Rebrickable's downloads page and terms page could not be read directly while preparing this release (HTTP 402/403),
+so no claim about what they permit is made here.
 
 ## Independent demo catalogue (included in this repository)
 

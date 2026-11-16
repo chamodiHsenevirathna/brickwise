@@ -40,8 +40,6 @@ data/demo/runtime/
 *.csv
 *.csv.gz
 
-# --- Real LEGO/Rebrickable photos copied for local README experiments: redistribution rights unverified
-docs/assets/products/
 
 # --- Local-only copies of the original screenshots (contain third-party product photos)
 docs/assets-private/
