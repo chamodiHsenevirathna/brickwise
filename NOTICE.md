@@ -9,7 +9,7 @@ Brickwise's own source code and documentation are the only things the project's 
 |---|---|---|
 | Sets and themes CSVs | Rebrickable (https://rebrickable.com/downloads/) | Terms **not verified** by this project. Credit Rebrickable.com. Not redistributed here. |
 | Set photographs | Hosted on Rebrickable's CDN; owned by their respective rights holders | Terms **not verified**. Not redistributed. Downloaded only to the user's local `data/images/`. |
-| Set names / numbers shown in README screenshots | Rebrickable catalogue metadata | Open question: confirm acceptable for public display. |
+| Set names / numbers | Rebrickable catalogue metadata | README screenshots use a synthetic demo catalogue and show none. Public display elsewhere remains an open question. |
 
 Rebrickable's downloads page and terms page could not be read automatically while preparing this release
 (HTTP 403), so no claim about what they permit is made here.

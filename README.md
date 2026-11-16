@@ -12,6 +12,18 @@ LEGO® sets are the demonstration catalogue. The recommendation architecture doe
 
 ![Brickwise discovery page](docs/assets/01-discover.png)
 
+*The real Brickwise app, running on a small synthetic demo catalogue (original artwork, not product photos). See [About these screenshots](#about-these-screenshots).*
+
+### From first tap to personal recommendations
+
+| Step | What happens | Screenshot |
+|---|---|---|
+| 1. **Discover** | One product at a time, with Like / Pass and a progress bar | [01](docs/assets/01-discover.png) |
+| 2. **Swipe** | Drag the card, or press a key, to rate it | [02](docs/assets/02-discover-swipe.png) |
+| 3. **For you** | Top 5 unrated products, each with a match score and a reason | [03](docs/assets/03-recommendations.png) |
+| 4. **Profile** | What the model has learned, and whether it is ready | [04](docs/assets/04-profile.png) |
+| 5. **Evaluation** | Precision@5 against two baselines | [05](docs/assets/05-evaluation.png) |
+
 > Status: working local MVP. Runs entirely on your machine with free tools: no paid APIs, no accounts, no cloud. It has **not** been evaluated with real users yet; see [Evaluation](#evaluation-and-experimentation).
 
 ---
@@ -38,39 +50,53 @@ The model is retrained from scratch on each recommendation request, so new feedb
 
 ## Product experience
 
-### Discovery
+All five screenshots are the real running app, driven with Playwright at 1440 × 1000. The profile behind them is a **scripted demo profile** that likes Vehicles and Space and passes on everything else. It is not a real person, and its numbers are not real-user results.
+
+### 1. Discover
 
 One large card per product, with the name, set number, theme, piece count and year. Like and Pass buttons, Undo, keyboard shortcuts (`→`/`L` like, `←`/`P` pass, `Z` undo), and a progress bar. Ratings are saved instantly and survive restarts.
 
-![Discovery page with swipe interaction](docs/assets/02-discover-swipe.png)
+![Discover page: product image, details, Pass / Undo / Like and progress](docs/assets/01-discover.png)
 
-*Mid-swipe: dragging the card reveals a PASS (or LIKE) stamp before the rating is committed.*
+*A product card with its details, the Like / Pass controls and a progress bar (30 of 120 rated).*
 
-### Personalised recommendations
+### 2. Swipe to rate
 
-The top five unrated products, ranked by predicted match. Each card explains itself using the liked sets it most resembles, and a toggle switches between the learned taste model and the plain similarity baseline.
+![Mid-swipe: the card is tilted with a LIKE stamp](docs/assets/02-discover-swipe.png)
 
-![Recommendations page](docs/assets/03-recommendations.png)
+*A real drag in progress: the card tilts and a LIKE stamp appears (dragging left shows PASS). Releasing past the threshold saves the rating.*
 
-*Recommendations after 60 ratings from a scripted demo profile whose taste is vehicles and space (placeholder images shown instead of set photos). The percentages are the classifier's predicted like-probability; the "similar to your liked" entries come from real nearest-neighbour lookups.*
+### 3. Personalised recommendations
 
-### Preference profile
+The top five unrated products, ranked by predicted match. Each card explains itself using the liked products it most resembles, and a toggle switches between the learned taste model and the plain similarity baseline.
 
-A readable summary of what the system has learned: counts, average piece count of liked versus passed sets, per-theme like rates and the model's status.
+![Recommendations page: ranked products with match percentages and explanations](docs/assets/03-recommendations.png)
 
-![Profile page](docs/assets/04-profile.png)
+*After 45 scripted ratings. The percentage is the classifier's predicted like-probability, and "Similar to your liked" lists real nearest-neighbour lookups on CLIP embeddings. The page continues below with ranks 4 and 5. Results are visually similar because the demo taste is narrow (see Future direction).*
 
-*The same demo profile. The system also shows when it is not ready (fewer than 3 likes or 3 passes).*
+### 4. Preference profile
 
-### Evaluation dashboard
+A readable summary of what the system has learned: counts, average piece count of liked versus passed products, per-theme like rates and the model's status.
 
-Precision@5 for the taste model, the similarity baseline and a random baseline. Results computed from the user's own ratings and results from synthetic users are shown in separate, clearly badged panels.
+![Profile page: rating counts, theme like rates and model status](docs/assets/04-profile.png)
 
-![Evaluation page](docs/assets/05-evaluation.png)
+*The same scripted profile: 17 likes, 28 passes, theme like rates and "Ready" model status. The app also shows when it is not ready (fewer than 3 likes or 3 passes).*
 
-*Top panel: held-out evaluation of the scripted demo profile's 60 ratings (a script, not a customer). Bottom panel: a simulated-user run, labelled "Simulated, not your data".*
+### 5. Evaluation dashboard
 
-> **About these screenshots.** They come from the real running application, captured with Playwright against a scratch copy of the data. The product photographs have been replaced with generic placeholder bricks drawn for this project, because the real set photos belong to third parties and are not redistributed here. Set names, numbers, themes, piece counts and the recommendations themselves are real: the ranking was computed from the CLIP embeddings of the actual photos. The demo profile was rated by a script following a stated taste, so the numbers show the pipeline working, not how well Brickwise suits real people. When you run the app locally with the ingested dataset, you see the real photos.
+Precision@5 for the taste model, the similarity baseline and a random baseline. Results from the rated profile and results from synthetic users are shown in separate panels.
+
+![Evaluation page: Precision@5 for taste model, similarity and random baselines](docs/assets/05-evaluation.png)
+
+*Top panel: held-out evaluation of the scripted profile's 45 ratings. The app badges it "Real ratings" because it cannot tell a script from a person; here it is **not** a real user. Bottom panel: a simulated-user run, badged "Simulated, not your data". On this tiny scripted run the similarity baseline scores slightly higher than the taste model in the top panel and lower in the bottom one, so the screenshot shows the dashboard working, not one method winning.*
+
+### About these screenshots
+
+- **Real app, synthetic data.** They come from the unmodified application running against a scratch data directory (the demo database is not part of the repository). The 120 products, their names ("Demo Rally Buggy 1" and so on) and their images are an original synthetic demo catalogue made for this purpose: simple brick-style illustrations drawn for this project, each carrying a "SYNTHETIC DEMO ARTWORK" strip. They are **not** LEGO® sets, Rebrickable data or photographs.
+- **Real pipeline.** Embeddings were computed by the actual CLIP model on those illustrations, and the rankings, scores and evaluation numbers are the app's real output for them.
+- **Scripted ratings.** A script rated 44 products by a stated taste (Vehicles and Space liked, with three deliberately flipped ratings); one more rating was made by dragging the card in the browser. Nothing here describes how well Brickwise suits real people.
+- **Footer text.** The app footer mentions Rebrickable because the app is built for that dataset; it does not apply to the synthetic demo catalogue shown here.
+- Run the app locally with the ingested dataset and you will see real set photos.
 
 ## How it works
 
@@ -202,7 +228,7 @@ None of this has been done. The app computes the real-user report as soon as it 
 - One local profile; no authentication or multi-user support.
 - CLIP is general-purpose and its model card describes it as a research output (deployed use is out of its stated scope; see `NOTICE.md`). It captures overall look (colour, shape, vehicle versus figure), not build complexity or minifigure content.
 - The model retrains on every recommendation request. This is instant at 800 items and would need caching at scale.
-- The UI has been checked in desktop Chrome screenshots and jsdom tests only. Mobile layout and dark mode were not manually verified.
+- The UI has been checked in desktop Chromium screenshots and jsdom tests only. Mobile layout and dark mode were not manually verified.
 - The first embedding run needs internet access to download the CLIP weights.
 
 ## Technology stack
@@ -291,7 +317,7 @@ Possible extensions:
 - **Product metadata and text embeddings** (titles, descriptions) combined with image embeddings.
 - **Hybrid recommendation models** that blend content-based scores with collaborative signals once there are many users.
 - **User segmentation** to give new shoppers a better starting point than random order.
-- **Recommendation diversity**, so the top five are not five near-duplicates (visible in the demo, where several results are similar buggies).
+- **Recommendation diversity**, so the top five are not five near-duplicates (visible in the demo, where several top results are similar rockets).
 - **A/B testing** of ranking strategies against real shoppers.
 
 ## Data, licensing and attribution
@@ -299,8 +325,8 @@ Possible extensions:
 **Set data and images** come from [Rebrickable](https://rebrickable.com): the public `sets` and `themes` CSV downloads, plus the set images hosted on Rebrickable's CDN. Please credit **Rebrickable.com**. This project has **not** verified Rebrickable's terms for the CSVs or for the images, and nothing here grants you any right to that data. Read Rebrickable's terms before using or sharing it.
 
 - The dataset, downloaded images, SQLite database (which holds your ratings) and CLIP embeddings are **not** part of this repository. They live in `data/`, which is git-ignored, and are created on your machine by the commands above.
-- The set photographs are owned by their respective rights holders. Attribution is not permission to redistribute them, so they are not republished here and the README screenshots use placeholders.
-- Set names and numbers shown in the screenshots are factual catalogue metadata from Rebrickable; whether showing them in a public repository is acceptable is an open question (see `NOTICE.md`).
+- The set photographs are owned by their respective rights holders. Attribution is not permission to redistribute them, so they are not republished here. The README screenshots use an original synthetic demo catalogue instead.
+- The README screenshots show only synthetic demo names, numbers and artwork created for this project, so they contain no Rebrickable metadata or photographs.
 
 **LEGO® disclaimer.** Brickwise is an independent project. It is not affiliated with, sponsored by or endorsed by the LEGO Group. LEGO® is a trademark of the LEGO Group. The Brickwise name and logo mark are original and are not LEGO® trade dress.
 
