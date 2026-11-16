@@ -22,6 +22,9 @@ Use the existing CLIP embedding implementation and recommender service against t
 
 A fresh profile must start with no feedback. Resetting the demo may only clear the demo database.
 
-## Not yet complete
+## Two catalogues
 
-This branch currently contains metadata and synthetic preference fixtures only. Image binaries, runnable demo ingestion, embedding generation, a separate API process, frontend demo routes, and automated isolation tests are not yet included. Do not treat this branch as a working demo until those pieces are implemented and verified.
+- **Fictional (public, default without local data):** `data/demo/`, run via `brickwise.data.demo_ingest`. Fixtures also used by the tests.
+- **Real (local only):** a frozen 16-product selection from the user's own catalogue, built by `brickwise.data.demo_real` (`propose` -> human review of the contact sheet -> `freeze` -> `build`) into git-ignored `data/demo-real/`. The personal DB is opened read-only with an authorizer denying the `feedback` table; embeddings are sliced from the existing cache (no CLIP); photographs are served read-only from `data/images/` through an allow-listed route and never copied. Selection metadata and photos must never be committed.
+
+See the README ("Demo mode") for commands. Example profiles are simulated or synthetic and are not evidence of recommendation quality.
