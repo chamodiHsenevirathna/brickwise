@@ -1,0 +1,13 @@
+profile_id,product_id,rating,data_origin
+demo-vehicle-space-fan,BW-001,1,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-002,1,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-003,1,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-004,0,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-005,1,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-006,1,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-007,0,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-008,0,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-009,1,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-010,1,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-011,0,synthetic_not_user_feedback
+demo-vehicle-space-fan,BW-012,0,synthetic_not_user_feedback
