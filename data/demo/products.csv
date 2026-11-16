@@ -1,0 +1,13 @@
+product_id,name,category,description,year,parts_count,image_filename,data_origin
+BW-001,Ridgeback Rally Car,Vehicles,"Compact red rally car with white racing stripes and a rear spoiler.",2026,186,images/bw-001.jpg,original_synthetic_demo
+BW-002,Titan Track Excavator,Construction,"Yellow tracked excavator with articulated arm and bucket.",2026,242,images/bw-002.jpg,original_synthetic_demo
+BW-003,Skyline Commuter Jet,Transport,"White and blue passenger jet with detailed wings and landing gear.",2026,318,images/bw-003.jpg,original_synthetic_demo
+BW-004,Glasshouse Garden,Nature,"Glass greenhouse filled with flowering plants and garden details.",2026,204,images/bw-004.jpg,original_synthetic_demo
+BW-005,Rescue Rotorcraft,Rescue,"Orange rescue helicopter with landing skids and a large rotor.",2026,173,images/bw-005.jpg,original_synthetic_demo
+BW-006,Lunar Survey Rover,Space,"White lunar exploration rover with solar panel and satellite dish.",2026,221,images/bw-006.jpg,original_synthetic_demo
+BW-007,Moonstone Keep,Fantasy,"Grey fantasy castle with purple towers, flags and garden accents.",2026,412,images/bw-007.jpg,original_synthetic_demo
+BW-008,Deepwater Explorer,Ocean,"Teal research submersible with a transparent observation dome.",2026,198,images/bw-008.jpg,original_synthetic_demo
+BW-009,MetroLink Tram,Transport,"Yellow and grey modern city tram with articulated roof equipment.",2026,276,images/bw-009.jpg,original_synthetic_demo
+BW-010,Redline Street Bike,Vehicles,"Red classic motorcycle with detailed engine and front suspension.",2026,164,images/bw-010.jpg,original_synthetic_demo
+BW-011,Coastal Research Vessel,Ocean,"Blue and white research ship with crane, bridge and deck equipment.",2026,356,images/bw-011.jpg,original_synthetic_demo
+BW-012,Jungle Stalker,Creatures,"Green brick-built dinosaur with articulated limbs and tail.",2026,289,images/bw-012.jpg,original_synthetic_demo
